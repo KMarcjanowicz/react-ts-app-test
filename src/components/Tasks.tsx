@@ -6,7 +6,7 @@ const Tasks = (props:ITasksProps) => {
     <>
         {
             Object.values(props.tasks).map((task:any) => (
-                <Task key={task.id} task={task} deleteTask={props.deleteTask}/>
+                <Task key={task.id} task={task} deleteTask={props.deleteTask} toggleReminder={props.toggleReminder}/>
             ))
         }
     </>
@@ -15,7 +15,8 @@ const Tasks = (props:ITasksProps) => {
 
 export interface ITasksProps {
     tasks: Array<TaskInterface>,
-    deleteTask?: (id:number) => void
+    deleteTask: (id:number) => void,
+    toggleReminder: (id:number) => void
 }
 
 export default Tasks
