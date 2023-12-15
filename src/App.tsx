@@ -4,6 +4,7 @@ import './App.css';
 import Header from './components/Header'
 import Tasks from './components/Tasks';
 import { TaskInterface } from './components/Task';
+import AddTask from './components/AddTask';
 
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
   return (
     <div className="container">
       <Header message='Hello Konrad!' color='green'></Header>
+      <AddTask />
       {tasks.length > 0 ? <Tasks tasks={tasks} deleteTask={deleteTask} toggleReminder={toggleReminder}/> : <p>No tasks to display.</p>}
     </div>
   );
