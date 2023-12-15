@@ -4,9 +4,11 @@ import './App.css';
 import Header from './components/Header'
 import Tasks from './components/Tasks';
 import { TaskInterface } from './components/Task';
+import AddTask from './components/AddTask';
 
 function App() {
 
+  const [showAddTask, setShowAddTask] = useState<boolean>(false);
   const [tasks, setTasks] = useState<TaskInterface[]>(
     [
         {
@@ -30,6 +32,13 @@ function App() {
     ]
   );
 
+  //Add taks
+  const addTask = (text:string, day:string, reminder:boolean):void => {
+    const newId:number = Math.floor(Math.random() * 100000) + 1;
+    const newTask:TaskInterface = {id: newId, text: text, day: day, reminder: reminder}
+    setTasks([...tasks, newTask]);
+  }
+
   //Delete tasks
   const deleteTask = (id:number):void => {
     setTasks(tasks.filter((task) => task.id !== id))
@@ -44,7 +53,8 @@ function App() {
 
   return (
     <div className="container">
-      <Header message='Hello Konrad!' color='green'></Header>
+      <Header message='Hello Konrad!' color='green' onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask}/>
+      {showAddTask && <AddTask addTask={addTask}/>}
       {tasks.length > 0 ? <Tasks tasks={tasks} deleteTask={deleteTask} toggleReminder={toggleReminder}/> : <p>No tasks to display.</p>}
     </div>
   );
