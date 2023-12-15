@@ -1,7 +1,8 @@
-import React, { ChangeEvent, SetStateAction } from 'react'
+import React, { ChangeEvent, FormEvent, SetStateAction } from 'react'
 import { useState } from 'react'
+import { TaskInterface } from './Task';
 
-const AddTask = () => {
+const AddTask = (props:IAddTask) => {
 
   const [text, setText] = useState<string>('');
   const [day, setDay] = useState<string>('');
@@ -22,8 +23,24 @@ const AddTask = () => {
     }
   }
 
+  const onSubmit = (e:FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if(!text){
+      alert("Please add task!");
+    }
+
+    // send it to the App.ts to execute
+    props.addTask(text, day, reminder);
+
+    //default values
+    setText('');
+    setDay('');
+    setReminder(false);
+  }
+
   return (
-    <form className='add-form'>
+    <form className='add-form' onSubmit={(e) => onSubmit(e)}>
 
       <div className='form-control'>
         <label>Task:</label>
@@ -43,6 +60,10 @@ const AddTask = () => {
       <input type='submit' value='Save Task' className='btn btn-block'/>
     </form>
   )
+}
+
+interface IAddTask{
+  addTask: (text:string, day:string, reminder:boolean) => void
 }
 
 export default AddTask

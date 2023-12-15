@@ -31,6 +31,13 @@ function App() {
     ]
   );
 
+  //Add taks
+  const addTask = (text:string, day:string, reminder:boolean):void => {
+    const newId:number = Math.floor(Math.random() * 100000) + 1;
+    const newTask:TaskInterface = {id: newId, text: text, day: day, reminder: reminder}
+    setTasks([...tasks, newTask]);
+  }
+
   //Delete tasks
   const deleteTask = (id:number):void => {
     setTasks(tasks.filter((task) => task.id !== id))
@@ -46,7 +53,7 @@ function App() {
   return (
     <div className="container">
       <Header message='Hello Konrad!' color='green'></Header>
-      <AddTask />
+      <AddTask addTask={addTask}/>
       {tasks.length > 0 ? <Tasks tasks={tasks} deleteTask={deleteTask} toggleReminder={toggleReminder}/> : <p>No tasks to display.</p>}
     </div>
   );
