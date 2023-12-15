@@ -3,7 +3,8 @@ import Button from "./Button";
 export interface Params {
     message: string,
     color?: string,
-    onAdd?: () => void
+    onAdd?: () => void,
+    showAdd?: boolean
 };
 
 const Header = (params: Params) => {
@@ -11,7 +12,7 @@ const Header = (params: Params) => {
     return(
         <header className="header">
             <h1 style={{color: params.color ? params.color: 'blue'}}>{params.message}</h1>
-            <Button message="Add" color="green" onAdd={params.onAdd}/>
+            <Button message={ params.showAdd ? 'Close' : 'Add' } color={ params.showAdd ? 'red' : 'green' } onAdd={params.onAdd}/>
         </header>
     );
 }
