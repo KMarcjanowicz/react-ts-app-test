@@ -1,6 +1,5 @@
 import React, { ChangeEvent, FormEvent, SetStateAction } from 'react'
 import { useState } from 'react'
-import { TaskInterface } from './Task';
 
 const AddTask = (props:IAddTask) => {
 

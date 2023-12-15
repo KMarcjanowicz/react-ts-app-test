@@ -1,14 +1,13 @@
-import { MouseEventHandler } from "react";
 import { Params } from "./Header";
 
 export interface ButtonParams extends Params {
-    onClickFunc: MouseEventHandler<HTMLButtonElement>
+    onAdd: () => void;
 };
 
 const Button = (params: ButtonParams) => {
 
     return(
-        <button onClick={params.onClickFunc} style={{ backgroundColor: params.color ? params.color: 'black' }} className="btn">{params.message}</button>
+        <button onClick={params.onAdd} style={{ backgroundColor: params.color ? params.color: 'black' }} className="btn">{params.message}</button>
     );
 }
 

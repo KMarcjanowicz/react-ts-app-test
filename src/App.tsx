@@ -8,6 +8,7 @@ import AddTask from './components/AddTask';
 
 function App() {
 
+  const [showAddTask, setShowAddTask] = useState<boolean>(false);
   const [tasks, setTasks] = useState<TaskInterface[]>(
     [
         {
@@ -52,8 +53,8 @@ function App() {
 
   return (
     <div className="container">
-      <Header message='Hello Konrad!' color='green'></Header>
-      <AddTask addTask={addTask}/>
+      <Header message='Hello Konrad!' color='green' onAdd={() => setShowAddTask(!showAddTask)}/>
+      {showAddTask && <AddTask addTask={addTask}/>}
       {tasks.length > 0 ? <Tasks tasks={tasks} deleteTask={deleteTask} toggleReminder={toggleReminder}/> : <p>No tasks to display.</p>}
     </div>
   );
