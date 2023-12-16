@@ -1,36 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react'
 import './App.css';
 import Header from './components/Header'
 import Tasks from './components/Tasks';
 import { TaskInterface } from './components/Task';
 import AddTask from './components/AddTask';
+import { error } from 'console';
 
 function App() {
 
   const [showAddTask, setShowAddTask] = useState<boolean>(false);
-  const [tasks, setTasks] = useState<TaskInterface[]>(
-    [
-        {
-            id: 1,
-            text: "Doctor's Appointment",
-            day: "Feb 5th 6:30PM",
-            reminder: true
-        },
-        {
-            id: 2,
-            text: "Meeting at school",
-            day: "Feb 6th 1:30PM",
-            reminder: true
-        },
-        {
-            id: 3,
-            text: "Food shopping",
-            day: "Feb 7th 2:30PM",
-            reminder: false
-        }
-    ]
-  );
+  const [tasks, setTasks] = useState<TaskInterface[]>([]);
+
+  useEffect(() => {
+    const getTasks = async ():Promise<void> => {
+      const data:void = await fetchTasks();
+      setTasks(data as unknown as TaskInterface[]);
+    };
+    getTasks();
+  }, []);
+
+  const fetchTasks = async ():Promise<void> => {
+      return fetch('http://localhost:5000/tasks')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText)
+          }
+          return response.json() as Promise<void>
+        })
+  }
 
   //Add taks
   const addTask = (text:string, day:string, reminder:boolean):void => {
