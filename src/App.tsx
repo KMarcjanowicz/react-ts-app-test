@@ -3,7 +3,7 @@ import { useState } from 'react'
 import './App.css';
 import Header from './components/Header'
 import Tasks from './components/Tasks';
-import { TaskInterface } from './components/Task';
+import Task, { TaskInterface } from './components/Task';
 import AddTask from './components/AddTask';
 
 function App() {
@@ -29,6 +29,16 @@ function App() {
         })
   }
 
+  const fetchTask = async (id:number):Promise<TaskInterface> => {
+    return fetch(`http://localhost:5000/tasks/${id}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText)
+        }
+        return response.json() as unknown as TaskInterface
+      })
+}
+
   //Add taks
   const addTask = async (text:string, day:string, reminder:boolean):Promise<void> => {
     // const newId:number = Math.floor(Math.random() * 100000) + 1;
@@ -53,8 +63,19 @@ function App() {
   }
 
   //Toggle reminder
-  const toggleReminder = (id:number):void => {
-    setTasks(tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task))
+  const toggleReminder = async (id:number):Promise<void> => {
+    const taskToToggle:TaskInterface = await fetchTask(id);
+    const updatedTask:TaskInterface = {...taskToToggle, reminder: !taskToToggle.reminder};
+
+    const res:Response = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'PUT',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(updatedTask)
+    });
+
+    const data:TaskInterface = await res.json() as TaskInterface;
+
+    setTasks(tasks.map((task) => task.id === id ? {...task, reminder: data.reminder} : task))
   }
 
   //{...tasks} to avoid type issues
