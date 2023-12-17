@@ -2,9 +2,13 @@ import React, { useEffect } from 'react';
 import { useState } from 'react'
 import './App.css';
 import Header from './components/Header'
+import Footer from './components/Footer';
 import Tasks from './components/Tasks';
-import Task, { TaskInterface } from './components/Task';
+import { TaskInterface } from './components/Task';
 import AddTask from './components/AddTask';
+import About from './components/About';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 
 function App() {
 
@@ -81,11 +85,22 @@ function App() {
   //{...tasks} to avoid type issues
 
   return (
-    <div className="container">
-      <Header message='Hello Konrad!' color='green' onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask}/>
-      {showAddTask && <AddTask addTask={addTask}/>}
-      {tasks.length > 0 ? <Tasks tasks={tasks} deleteTask={deleteTask} toggleReminder={toggleReminder}/> : <p>No tasks to display.</p>}
-    </div>
+    <Router>
+      <div className="container">
+        <Header message='Task Tracker' color='black' onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask}/>
+        <Routes>
+          <Route path='/' element={
+            <>
+              {showAddTask && <AddTask addTask={addTask}/>}
+              {tasks.length > 0 ? <Tasks tasks={tasks} deleteTask={deleteTask} toggleReminder={toggleReminder}/> : <p>No tasks to display.</p>}
+            </>
+          }>   
+          </Route>
+          <Route path='/about' element={<About/>}/>
+        </Routes>
+        <Footer/>
+      </div>
+    </Router>
   );
 }
 
