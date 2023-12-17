@@ -5,7 +5,6 @@ import Header from './components/Header'
 import Tasks from './components/Tasks';
 import { TaskInterface } from './components/Task';
 import AddTask from './components/AddTask';
-import { error } from 'console';
 
 function App() {
 
