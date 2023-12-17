@@ -1,6 +1,9 @@
 # react-ts-app-test
  Simple web application to learn react.
- Simple task tracker made in TypeScript based on the tutorial: https://www.youtube.com/watch?v=w7ejDZ8SWv8&t=5410s
+ 
+ Simple task tracker made in TypeScript based on the tutorial: 
+ 
+ https://www.youtube.com/watch?v=w7ejDZ8SWv8&t
 
 ## How to init:
 > npm install
